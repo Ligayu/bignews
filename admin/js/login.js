@@ -11,6 +11,7 @@ $(function () {
                     if (!$.trim($(value).val())) {
                         $('.modal').modal('show');
                         $('.modal-body p').html('用户名或密码不能为空');
+                        return false;
                     }
                 })
             },
