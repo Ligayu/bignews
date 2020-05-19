@@ -8,6 +8,7 @@ $(function () {
                 'Authorization': localStorage.getItem('token')
             },
             success: function (res) {
+                console.log(res);
                 if (res.code == 200) {
                     var htmlStr = template('categoryList', res);
                     $('.container-fluid tbody').html(htmlStr);
@@ -22,7 +23,7 @@ $(function () {
         $('.addModal').modal('show');
     })
     $('.addModal .btn-sure').on('click', function () {
-        var categoryId = $('#myForm input[name=id]').val();
+        var categoryId = $('#myForm input[name=id]').val();//如果模态框隐藏域有id值就是更新数据
         $.ajax({
             url: categoryId ? BigNew.category_edit : BigNew.category_add,
             type: 'post',
@@ -61,6 +62,32 @@ $(function () {
                 $('#myForm input[name=id]').val(res.data[0].id);
                 $('#myForm input[name=name]').val(res.data[0].name);
                 $('#myForm input[name=slug]').val(res.data[0].slug);
+            }
+        })
+    })
+
+    //删除功能
+    $('.common_con tbody').on('click', '.btn-dele', function () {
+        $('#delModal').modal('show');
+        console.log($(this).data('id'));//当前所点击按钮的那个id值
+        $.ajax({
+            url: BigNew.category_delete,
+            type: 'post',
+            data: {
+                id: $(this).data('id')
+            },
+            headers: {
+                "Authorization": localStorage.getItem('token')
+            },
+            success: function (res) {
+                console.log(res);
+                if (res.code == 204) {
+                    $(".delModal .btn-sure").on('click', function () {
+                        $('#delModal').modal('hide');
+                        render();
+                    })
+                }
+
             }
         })
     })
