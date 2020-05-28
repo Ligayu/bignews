@@ -7,7 +7,7 @@ $(function () {
             data: $(this).serialize(),
             beforeSend: function () {
                 $('.login_form input[name]').each(function (index, value) {
-                    console.log($(value));
+                    console.log(value);
                     if (!$.trim($(value).val())) {
                         $('.modal').modal('show');
                         $('.modal-body p').html('用户名或密码不能为空');
